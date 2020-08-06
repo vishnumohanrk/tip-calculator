@@ -1,14 +1,12 @@
 <template>
-  <label for="bill">
-    Bill
-    <input
-      type="number"
-      id="bill"
-      placeholder="Enter Bill Amount"
-      :value="null"
-      @input="$emit('input', $event.target.value)"
-    />
-  </label>
+  <v-text-field
+    class="mt-3"
+    label="Your Bill"
+    type="number"
+    :value="null"
+    @input="value => $emit('input', value)"
+    outlined
+  ></v-text-field>
 </template>
 
 <script>

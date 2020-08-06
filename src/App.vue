@@ -1,39 +1,50 @@
 <template>
-  <div>
-    <bill-input v-model.number="bill" />
-    <div>
-      <app-slider
-        id="tipPercent"
-        :min="0"
-        :max="100"
-        v-model.number="tipPercent"
-      />
-      <p>Tip Percent {{ tipPercent }}%</p>
-    </div>
-    <p>Tip: {{ tipAmt }}</p>
-    <p>Total: {{ totalAmt }}</p>
-    <div>
-      <app-slider id="split" :min="1" :max="10" v-model.number="split" />
-      <p>Split {{ split }} person</p>
-      <p>Tip Each: {{ tipAmt / split }}</p>
-      <p>Bill Each: {{ totalAmt / split }}</p>
-    </div>
-  </div>
+  <app-layout>
+    <app-card-title />
+    <v-card-text>
+      <v-form>
+        <app-bill-input v-model.number="billValue" />
+        <app-slider
+          v-model.number="tipPercent"
+          name="Tip Percent"
+          :min="0"
+          :max="100"
+        />
+        <app-info-flex name="Tip Amount" :value="tipAmt" />
+        <v-divider class="mb-3" />
+        <app-info-flex bold name="Grand Total" :value="totalAmt" />
+
+        <app-slider
+          v-model.number="split"
+          name="Split"
+          :min="1"
+          :max="10"
+          class="mt-8"
+        />
+        <app-info-flex name="Tip Each" :value="tipAmt / split" />
+        <app-info-flex name="Bill Each" :value="totalAmt / split" />
+      </v-form>
+    </v-card-text>
+  </app-layout>
 </template>
 
 <script>
-import BillInput from './components/BillInput.vue';
+import AppLayout from './components/BaseComp/Layout.vue';
+import AppCardTitle from './components/BaseComp/CardTitle.vue';
+import AppBillInput from './components/BillInput.vue';
 import AppSlider from './components/Slider.vue';
 
 export default {
   components: {
-    BillInput,
+    AppLayout,
+    AppCardTitle,
+    AppBillInput,
     AppSlider,
   },
 
   data() {
     return {
-      bill: 0,
+      billValue: 0,
       tipPercent: 0,
       split: 1,
     };
@@ -41,11 +52,11 @@ export default {
 
   computed: {
     tipAmt() {
-      return (this.tipPercent / 100) * this.bill;
+      return (this.tipPercent / 100) * this.billValue;
     },
 
     totalAmt() {
-      return this.bill + this.tipAmt;
+      return this.tipAmt + this.billValue;
     },
   },
 };
