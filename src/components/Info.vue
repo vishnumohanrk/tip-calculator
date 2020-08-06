@@ -5,7 +5,7 @@
     style="width:100%"
   >
     <span>{{ name }}</span>
-    <span>{{ value }}</span>
+    <span>{{ valueString }}</span>
   </p>
 </template>
 
@@ -15,6 +15,14 @@ export default {
     name: String,
     value: [String, Number],
     bold: Boolean,
+  },
+
+  computed: {
+    valueString() {
+      return this.name !== 'Tip Percent' && this.name !== 'Split'
+        ? this.value.toFixed(2) + ' $'
+        : this.value;
+    },
   },
 };
 </script>
