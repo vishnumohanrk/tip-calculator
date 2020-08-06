@@ -4,7 +4,7 @@
     label="Your Bill"
     type="number"
     :value="null"
-    @input="value => $emit('input', value)"
+    @input="value => $emit('input', Number(value))"
     outlined
   ></v-text-field>
 </template>
